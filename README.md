@@ -50,6 +50,25 @@ Card Points(needed at the end of the game):
 
 finishing a game: 
 1. When a person has at least 3 pure sequences; and is able to compose defined card patterns from the rest of his hand, except for one card, he/she can choose to ‘declare’ to be the winner in the game by choosing to keep that unfitting card face-down on the play area
-2. When a person has declared a win, points are calculated in a zero-sum fashion as defined below:
-    []powers/honors and special honor/power combination(called marriage): each person shows how many honors/powers they possess
-    []hx
+
+2. When a person has declared a win, points are calculated in a zero-sum fashion. The game score for a person is calculated in two parts, as explained below:
+    []powers/honors and special honor/power combination(called marriage): 
+        Each person shows how many honors/powers they possess and the score based on honor is computed as follows:
+        PART_A = power_score * number_of_players - honor_sum
+
+        where:
+        honor_sum = sum(honor total of all folks)
+
+    []hand points:
+      
+      PART_B = -2 * points_in_hand
+      
+      In case of surrender on 1st move:
+      points_in_hand = 2
+      In case of surrender after 1st move:
+      points_in_hand = 5
+      In case a person didn’t get to play and a win was declared by another player:
+      points_in_hand = (points_in_hand/2)
+    
+    Game_score for player = PART_A + PART_B
+    Also, sum(game_scores) == 0
