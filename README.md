@@ -54,7 +54,8 @@ finishing a game:
 2. When a person has declared a win, points are calculated in a zero-sum fashion. The game score for a person is calculated in two parts, as explained below:
 
     []powers/honors and special honor/power combination(called marriage): 
-      Each person shows how many honors/powers they possess and the score based on honor is computed as follows:
+      Each person shows how many honors/powers they possess and the score based on honor is computed as follows:  
+
       PART_A = power_score * number_of_players - honor_sum
 
       where:
