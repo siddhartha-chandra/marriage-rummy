@@ -16,8 +16,7 @@ var ui = SpreadsheetApp.getUi();
 
 function advance_dealer(){
   if (typeof current_dealer=='string'){
-    ui.alert("Current dealer not set. Please press 'Reset' to set dealer!");
-    return;
+    throw "Current dealer not set. Please press 'Reset' to set dealer!"
   }
   var next_dealer = get_next_dealer();
   toggle_dealer(console_.getRange(5 + current_dealer, 2));
@@ -34,8 +33,7 @@ function get_next_dealer(){
     var direction_ = -1;
   } 
   else {
-    ui.alert("Please set direction of play!");
-    return;
+    throw "Please set direction of play!"
   }
   var next = (10 + current_dealer + direction_) % 10
   var is_active = console_.getRange(5 + next, 8).getValue();
@@ -77,8 +75,7 @@ function initialize_dealer(){
 
 function prev_game() {
   if (game_number == 1) {
-    ui.alert("This is the first game. Cannot go before this!");
-    return;
+    throw "This is the first game. Cannot go before this!"
   }
   game_number -= 1;
   console_.getRange(1, 3).setValue(game_number);
@@ -88,8 +85,7 @@ function prev_game() {
 
 function next_game() { 
   if (game_number == 1000) {
-    ui.alert("This is the last game in this set. Cannot go beyond this!");
-    return;
+    throw "This is the last game in this set. Cannot go beyond this!"
   } 
   game_number += 1;
   console_.getRange(1, 3).setValue(game_number);
@@ -143,36 +139,31 @@ function is_arr_w(arr) {
 function validate_only_one_declare(ls) {
   var declare_count = ls.filter(is_arr_w).length;
   if (declare_count != 1) {
-    ui.alert("one person needs to declare, and only one person can declare!");
-    return;
+    throw "one person needs to declare, and only one person can declare!";
   } 
 }
 
 function validate_honor(x) {
   var res = honor_regex.exec(x);
   if (res == null){
-    ui.alert("invalid honor entered!");
-    return;
+    throw "invalid honor entered!";
   }
 }
 
 function validate_hand(x) {
   var res = hand_regex.exec(x);
   if (res == null){
-    ui.alert("invalid hand entered!");
-    return;
+    throw "invalid hand entered!";
   }
 }
 
 
 function validate_honor_hand_sanity(p, h) {
   if (p.length != h.length) {
-    ui.alert("uneven number of honors and hands!");
-    return;
+    throw "uneven number of honors and hands!"
   }
   if (p.length < 2) {
-    ui.alert("more than one player needs to play a game!");
-    return;
+    throw "more than one player needs to play a game!"
   }
   for (var idx = 0; idx < p.length; idx++) {
     validate_honor(p[idx]);
@@ -209,12 +200,10 @@ function is_prev_score_empty(){
 function update() {
   var direction_ = console_.getRange('G1').getValue();
   if (game_number > 1 && is_prev_score_empty()){
-    ui.alert("Break in game sequence detected!..Cannot update when previous game has not been recorded");
-    return;
+    throw "Break in game sequence detected!..Cannot update when previous game has not been recorded"
   }
   if (direction_ == null){
-    ui.alert("Please set direction of play!");
-    return;
+    throw "Please set direction of play!"
   }
   validate_sheet();
   update_honor_hand();
@@ -259,8 +248,7 @@ function display_measures(){
       idx = 4;
       break;  
     default:
-      ui.alert("Invalid measurement selected!");
-      return;
+      throw "Invalid measurement selected!"
     }
   for (var i=0; i<19; i+=2){
     var row = 5 + i/2;
